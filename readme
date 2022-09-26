@@ -1,0 +1,18 @@
+Server：
+
+    //重写服务
+	uesServer := service.NewUesServer(service.NewInMemoryUeStore())
+
+	//grpcServer
+	grpcServer := grpc.NewServer()
+
+	//把服务注册到grpcServer上
+	track_msg.RegisterUEsServer(grpcServer, uesServer)
+
+	//监听端口
+	address := fmt.Sprintf("127.0.0.1:%d", *port)
+	listener, err := net.Listen("tcp", address)
+
+	//grpcServer在监听端口上开始服务
+	err = grpcServer.Serve(listener)
+
