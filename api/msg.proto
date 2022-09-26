@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+package msg;
+option go_package = "./track_msg";
+
+message Location {
+    double Lat = 1;
+    double Lng = 2;
+}
+
+message UEInfo{
+    uint64 Imsi = 1;
+    Location Loca = 2;
+    double bearing = 3;
+}
+
+message UEInfoArray{
+    repeated UEInfo uEInfo =1;
+}
+
+message UERequest {
+    uint64 procesureCode = 1;
+}
+
+service UEs {
+    // rpc CreateUser (users.CreateUserRequest) returns (users.CreateUserResult);
+    rpc GetUEs (UERequest) returns (stream UEInfo);
+  }
